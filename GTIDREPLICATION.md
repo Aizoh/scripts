@@ -1,7 +1,7 @@
 
 # setting up replication GTID
 
-## [Procedure] (https://dev.mysql.com/doc/refman/8.3/en/replication-gtids-howto.html)
+## [Procedure](https://dev.mysql.com/doc/refman/8.3/en/replication-gtids-howto.html)
 The key steps in this startup process for the simplest possible GTID replication topology, consisting of one source and one replica, are as follows:
 
 - If replication is already running, synchronize both servers by making them read-only.
