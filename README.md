@@ -22,7 +22,7 @@ This is a guide on setting up automatic database dumping, and moving the files t
 This is a guide on setting up replication monitoring incase there is a lag in replication between the server and the slave and send email notifications.
 *** 
 
-### [Bash Scrapbook](/bashscriptings.pdf)
+### [Bash Scrapbook](/bashscripting.pdf)
  BASH SCRIPTING SCRAP BOOK.
 This is a guide on bash scripting
 *** 
