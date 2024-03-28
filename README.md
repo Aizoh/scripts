@@ -26,3 +26,8 @@ This is a guide on setting up replication monitoring incase there is a lag in re
  BASH SCRIPTING SCRAP BOOK.
 This is a guide on bash scripting
 *** 
+
+### [Metabase](/METABASE.md)
+ DEBIAN METABASE AS A SERVICE.
+This is a guide on setting up metabse in a debian system to run as a service.
+*** 
