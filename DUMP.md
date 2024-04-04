@@ -63,6 +63,9 @@ rm $BACKUP_DIR/$DB_NAME-$DATE.sql
 # Remove backups older than 2 days on remote server
 ssh user@remote_server "find $REMOTE_BACKUP_DIR/* -mtime +2 -exec rm {} \;"
 
+#check first if you have a key
+cat ~/.ssh/id_rsa.pub
+
 #do this first if not generated key
 ssh-keygen -t rsa
 
