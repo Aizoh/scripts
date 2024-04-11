@@ -29,5 +29,10 @@ This is a guide on bash scripting
 
 ### [Metabase](/METABASE.md)
  DEBIAN METABASE AS A SERVICE.
-This is a guide on setting up metabse in a debian system to run as a service.
+This is a guide on setting up metabAse in a debian system to run as a service.
+*** 
+
+### [MongoDB](/MONGODB.md)
+ DEBIAN MONGODB AS A SERVICE.
+This is a guide on setting up MongoDB in a debian system to run as a service.
 *** 
