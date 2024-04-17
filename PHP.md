@@ -7,7 +7,7 @@
 sudo a2enmod php8.2
 
 #disable one to enable the othwer one
-sudo a2dismod php8.2
+sudo a2dismod php8.3
 
 #change cli PHP
 sudo update-alternatives --config php

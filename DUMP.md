@@ -29,7 +29,7 @@ rm $BACKUP_DIR/$DB_NAME-$DATE.sql
 # Remove backups older than 2 days on remote server
 sshpass -p 'remote_password' ssh user@remote_server "find $REMOTE_BACKUP_DIR/* -mtime +2 -exec rm {} \;"
 
-##crontab
+##crontab run at midnight everyday
 chmod +x backup_database.sh
 crontab -e
 
