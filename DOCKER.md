@@ -31,8 +31,9 @@ However here I faced the issues **Can't install docker desktop - docker-desktop 
 
 2. Set up and install Docker Engine from [Docker's apt repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
 
+### STEP 1 Set up Docker's apt repository.
 ```bash
-#STEP 1 Set up Docker's apt repository.
+
 # Add Docker's official GPG key:
 sudo apt-get update
 sudo apt-get install ca-certificates curl
@@ -41,12 +42,18 @@ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyring
 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
 # Add the repository to Apt sources: If in mint Replace the version code If you use an Ubuntu derivative distro, such as Linux Mint, you may need to use UBUNTU_CODENAME instead of VERSION_CODENAME.
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+#like
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "jammy") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+#INCASE YO ACCIDENTALLY ADD THE WRONG REPO AND NEED TO REMOVE AND ADD IT AFRESH DO 
+sudo rm /etc/apt/sources.list.d/docker.list
+
+```
+## INSTALL DOCKER PACKAGES
+
+```bash
 sudo apt-get update
 
 # STEP 2 Install the Docker packages. Or now Install the deb you downloaded.
@@ -60,7 +67,7 @@ You can initialize pass by using a gpg key. To generate a gpg key, run:
 
 ```bash
 gpg --generate-key
-#foloow the prompts then 
+#follow the prompts then 
 
 pass init <your_generated_gpg-id_public_key> #replace twith your generated key
 

@@ -43,3 +43,10 @@ This is a guide on working with various PHP Systems in a debian system
 *** 
 
 ### [DOCKER](/DOCKER.md)
+DODKER FOR LINUX.
+This is a guide on setting up both Docker desktop for LInux and Docker engine & compose 
+***
+### [ENVIRONMENT SETUP](/SETUP.md)
+SETTING UP PHP ENVIRONMENT IN A LINUX SERVER .
+This is a guide on working with PHP environments on LInux based systems 
+***
