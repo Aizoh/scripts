@@ -1,4 +1,4 @@
-# Database Administration Scripts
+# System Admin & Development Scripts
 
 This repo contains various bash and database scripts essential for a db Administrator.
 
@@ -49,4 +49,14 @@ This is a guide on setting up both Docker desktop for LInux and Docker engine & 
 ### [ENVIRONMENT SETUP](/SETUP.md)
 SETTING UP PHP ENVIRONMENT IN A LINUX SERVER .
 This is a guide on working with PHP environments on LInux based systems 
+***
+
+### [LARAVEL APPLICATION DEPLOYMENT](/LARAVELDEPLOY.md)
+SETTING UP PHP ENVIRONMENT IN A LINUX SERVER .
+This is a guide on working with PHP environments on LInux based systems 
+***
+
+### [CONTAINERIZATION WITH DOCKER](/DOCKERFY.md)
+CONTAINARIZING LARAVEL APPLICATION USING DOCKER .
+This is a guide on working with docker containers and a larave based systems 
 ***

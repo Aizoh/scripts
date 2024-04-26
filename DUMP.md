@@ -26,7 +26,7 @@ sshpass -p 'remote_password' scp $BACKUP_DIR/$DB_NAME-$DATE.sql user@remote_serv
 # Remove local backup file
 rm $BACKUP_DIR/$DB_NAME-$DATE.sql
 
-# Remove backups older than 2 days on remote server
+# Remove backups older than 2 days on remote server based on date modified more than 2 days (-mtime) if you choose to use created day (-ctime) 
 sshpass -p 'remote_password' ssh user@remote_server "find $REMOTE_BACKUP_DIR/* -mtime +2 -exec rm {} \;"
 
 ##crontab run at midnight everyday
@@ -60,7 +60,7 @@ scp $BACKUP_DIR/$DB_NAME-$DATE.sql user@remote_server:$REMOTE_BACKUP_DIR
 # Remove local backup file after copying
 rm $BACKUP_DIR/$DB_NAME-$DATE.sql
 
-# Remove backups older than 2 days on remote server
+# Remove backups older than 2 days on remote server based on date modified more than 2 days (-mtime) if you choose to use created day (-ctime) 
 ssh user@remote_server "find $REMOTE_BACKUP_DIR/* -mtime +2 -exec rm {} \;"
 
 #check first if you have a key
