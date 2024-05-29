@@ -15,3 +15,6 @@ PTR RECORD : (Reverse DNS) Maps an IP address to a domain Name ensure that there
 
 Email Routing direct your emails to a specific server. For thirdparty email services
 ```
+WATCH VIDEO
+
+See youtube resources on deploting in a shared hosting via [CPANEL](https://www.youtube.com/watch?v=ZWVH1vLwDMA) or [HERE](https://www.youtube.com/watch?v=w1JNkv-GH3A)
