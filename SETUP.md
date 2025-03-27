@@ -29,6 +29,9 @@ sudo mysql
 ```sql
 /*USING NATIVE COMMON*/
 CREATE USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+/**Global access */
+CREATE USER 'user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'user'@'%' WITH GRANT OPTION;
 
 /*FOR MYSQL 8.0 AND ABOVE */
 CREATE USER 'username'@'host' IDENTIFIED WITH authentication_plugin BY 'password';

@@ -11,5 +11,8 @@ DISK USAGE
 df -h
 #current directory usage 
 du -sh .
+# output the content of a particular line in a big file that cannot be opened normally for instance line 6574 of an over 20gb sql file
+sed -n '6574p'filename.sql
 
 ```
+
