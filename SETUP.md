@@ -13,6 +13,10 @@ adduser myuser
 #Adding the User to the sudo Group
 usermod -aG sudo myuser
 
+#reset passowrd as root
+passwd username
+ 
+
 ```
 ### INSTALL  MYSQL SERVER
 
@@ -42,6 +46,10 @@ ALTER USER 'sammy'@'localhost' IDENTIFIED WITH mysql_native_password BY 'passwor
 /*GRANT PRIVILEGES*/
 GRANT ALL PRIVILEGES ON *.* TO 'sammy'@'localhost' WITH GRANT OPTION;
 
+FLUSH PRIVILEGES;
+
+/**For older systems use  */
+SET PASSWORD FOR 'user'@'localhost' = PASSWORD('password');
 FLUSH PRIVILEGES;
 
 exit
