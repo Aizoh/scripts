@@ -141,3 +141,15 @@ mysql> RESET REPLICA;
 mysql> START REPLICA;
 
 ```
+
+#### Incase the Slave experiences an error in running a certain query you can skip the Query 
+```bash
+#login as root
+    STOP SLAVE;
+    SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1;
+    START SLAVE;
+
+#root
+SHOW SLAVE STATUS\G
+
+```

@@ -172,3 +172,31 @@ mysqldump [options] --all-databases
 
 mysqldump [options] --result-file=dump.sql
 ```
+
+## REPLICATION TROUBLESHOOTING
+
+*INCASE OF ERROR OF (Relay log read failure: Could not parse relay log event entry. The possible reasons are: the master's binary log is corrupted (you can check this by running 'mysqlbinlog' on the binary log), the slave's relay log is corrupted (you can check this by running 'mysqlbinlog' on the relay log), a network problem, or a bug in the master's or slave's MySQL code. If you want to check the master's binary log or slave's relay log, you will be able to know their names by issuing 'SHOW SLAVE STATUS' on this slave.)*
+
+- **FIRST CAPTURE THESE 2 POSITIONS TO RESET THE SLAVE FROM **
+
+```sql
+
+mysql> SHOW SLAVE STATUS \G;
+
+-- capture these 2 positions
+
+Relay_Master_Log_File: repmaster-bin.004591
+Exec_Master_Log_Pos: 85789668
+
+-- stop slave
+mysql> stop slave;
+
+-- make slave forget its replication position in the master's binary log
+mysql> reset slave;
+
+-- change slave to start reading from stopped position
+mysql> change master to master_log_file='repmaster-bin.004591', master_log_pos=85789668;
+
+-- start slave
+mysql> start slave;
+```
