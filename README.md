@@ -46,9 +46,16 @@ This is a guide on working with various PHP Systems in a debian system
 DODKER FOR LINUX.
 This is a guide on setting up both Docker desktop for LInux and Docker engine & compose 
 ***
+
 ### [ENVIRONMENT SETUP](/SETUP.md)
 SETTING UP PHP ENVIRONMENT IN A LINUX SERVER .
 This is a guide on working with PHP environments on LInux based systems 
+***
+
+### [LOCAL DEPLOYMENT](/LOCAL.md)
+HOSTING AN APP LOCALLY .
+Local url link for your application via virtual config
+
 ***
 
 ### [LARAVEL APPLICATION DEPLOYMENT](/LARAVELDEPLOY.md)
