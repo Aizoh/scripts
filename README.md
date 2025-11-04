@@ -52,6 +52,10 @@ SETTING UP PHP ENVIRONMENT IN A LINUX SERVER .
 This is a guide on working with PHP environments on LInux based systems 
 ***
 
+### [BRANCHING](/BRANCHING.md)
+USING BRANCHES IN DEVELOPMENT
+This guide is how to use branches on a development environment. most common items.
+***
 ### [LOCAL DEPLOYMENT](/LOCAL.md)
 HOSTING AN APP LOCALLY .
 Local url link for your application via virtual config
