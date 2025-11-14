@@ -293,6 +293,34 @@ systemctl status metabase.service
 
 ```
 
+### updating Metabase
+
+- Stop Metabase Services 
+- Keep a copy of the database 
+- [Download](https://www.metabase.com/docs/v0.56/installation-and-operation/upgrading-metabase) the newest Jar file and replace the existing Jar file
+- Check JDK Version matches the Jar version `java -version`
+
+
+```bash
+sudo systemctl stop metabase.service
+
+# use any tool to keep the copy
+
+#if need be to download a new JDK 
+sudo apt install openjdk-17(X)-jdk -y
+# with Multiple Versions 
+sudo update-alternatives --config java
+
+#after
+sudo systemctl daemon-reload
+sudo systemctl restart metabase.service
+sudo systemctl status metabase.service
+
+##Still Having problems ? Check if metabase configs pint to the right JDK  in this case at the time metabase 56 worked with jdk 21
+ExecStart=/usr/bin/java -jar /home/igitau/metabase/metabase.jar  >> ExecStart=/usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar /home/igitau/metabase/metabase.jar
+
+```
+
 ### Explore
 To learn more explore the [Metabase Documentation](https://www.metabase.com/docs/latest/).
 Happy Analysis
