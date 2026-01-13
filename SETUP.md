@@ -141,3 +141,7 @@ sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 sudo composer self-update
 
 ```
+
+## FPM adjustements
+ `/etc/php/8.2/fpm/php.ini` & `/etc/php/8.2/fpm/pool.d/www.conf` files 
+
