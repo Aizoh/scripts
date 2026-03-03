@@ -5,3 +5,7 @@ Tracing device in local network using ARP scan
     sudo arp-scan --localnet
 
 ```
+### troubleshoot connection to ISP
+```bash
+    mtr 8.8.8.8
+```

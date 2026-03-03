@@ -57,5 +57,93 @@ RewriteEngine on
 RewriteCond %{SERVER_NAME} =sub.domain.com
 RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
 </VirtualHost>
+```
+## SSL ON LOCAL 
+
+1. 
+
+```bash
+#edit hosts
+sudo nano /etc/hosts
+
+127.0.0.1 site.local
+127.0.0.1 www.site.local
+
+#install mkcert for ssl
+sudo apt install mkcert libnss3-tools
+mkcert -install
+#generate ssl 
+mkcert site.local www.site.local
+
+#move the ssl certs 
+sudo mkdir -p /etc/ssl/local
+
+sudo mv site.local+1.pem /etc/ssl/local/site.local.pem
+sudo mv site.local+1-key.pem /etc/ssl/local/site.local-key.pem
+#secure the keys
+sudo chmod 600 /etc/ssl/local/site.local-key.pem
+sudo chmod 644 /etc/ssl/local/site.local.pem
+
+#enable ssl
+sudo a2enmod ssl
+
+#ensure your virtual host config has the ssl config
+sudo nano /etc/apache2/sites-available/site.conf
+
+#
+
+<VirtualHost *:80>
+     ServerAdmin admin@site
+     ServerName site.local
+     ServerAlias www.site.local
+    Redirect permanent / https://site.local/
+
+     DocumentRoot /var/www/html/site/public
+     
+
+     <Directory /var/www/html/site/public>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+     </Directory>
+
+    <FilesMatch \.php$>
+        # 2.4.10+ can proxy to unix socket
+         SetHandler "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost"
+    </FilesMatch>
+
+     ErrorLog ${APACHE_LOG_DIR}/site_error.log
+     CustomLog ${APACHE_LOG_DIR}/site.com_access.log combined
+</VirtualHost>
+<VirtualHost *:443>
+    ServerAdmin admin@site
+    ServerName site.local
+    ServerAlias www.site.local
+    DocumentRoot /var/www/html/site/public
+
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/local/site.local.pem
+    SSLCertificateKeyFile /etc/ssl/local/site.local-key.pem
+
+    <Directory /var/www/html/site/public>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    <FilesMatch \.php$>
+        SetHandler "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost"
+    </FilesMatch>
+
+    ErrorLog ${APACHE_LOG_DIR}/site_ssl_error.log
+    CustomLog ${APACHE_LOG_DIR}/site_ssl_access.log combined
+</VirtualHost>
 
 
+#apache test
+sudo apachectl configtest
+
+
+
+```

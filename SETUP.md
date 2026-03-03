@@ -1,6 +1,197 @@
 ## SERVER SET UP
 SETTING UP A SERVER
 
+0. ### system hardening ###
+
+```bash
+    #disable root ssh Login 
+    sudo passwd -l root #sudo passwd -u root to enable
+    #edit sudo nano /etc/ssh/sshd_config
+    PermitRootLogin no
+    AllowUsers yoursshuser
+    # Use public key authentication only (disable passwords)
+    PasswordAuthentication no
+    ChallengeResponseAuthentication no
+    UsePAM yes
+
+    # Optional: limit login attempts
+    MaxAuthTries 3
+
+    # Disable empty passwords
+    PermitEmptyPasswords no
+
+    # Keep SSH alive connections shorter to avoid hanging sessions
+    ClientAliveInterval 300
+    ClientAliveCountMax 2
+    #on local pc
+    ssh-keygen -t ed25519 -C "user@server"
+    #copy to server 
+    ssh-copy-id user@your_server_ip
+
+
+    ssh-keygen -f "/home/user/.ssh/known_hosts" -R "serverip"
+
+    #add ufw firewall rules 
+    sudo ufw allow ssh
+    sudo ufw allow http
+    sudo ufw allow https
+    #enable firewall
+    sudo ufw status
+    sudo ufw enable
+
+    #install an audit tool
+    sudo apt install lynis
+    sudo lynis audit system
+
+    # Edit 
+
+    #install fail2ban 
+    sudo apt update
+sudo apt install fail2ban -y
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
+```
+## [NGINX START](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04)
+
+```bash
+
+#in production just create a different directory for your site instead of the html Only user and www-data can read/write. Others have no access.
+
+#Separate user for deployment: You can create a dedicated user for deploying Laravel projects, and make www-data the group.
+sudo mkdir -p /var/www/sitename
+sudo chown -R user:www-data /var/www/sitename
+sudo chmod -R 750 /var/www/sitename
+cd /var/www/sitename
+git clone https://github.com.
+
+
+#For Laravel specifically, you’ll later allow Nginx write access to storage and cache:
+sudo chown -R www-data:www-data /var/www/sitename/storage /var/www/sitename/bootstrap/cache
+sudo chmod -R 775 /var/www/sitename/storage /var/www/sitename/bootstrap/cache
+
+#see enabled sites
+ls -l /etc/nginx/sites-enabled/
+
+#to disable 
+sudo unlink /etc/nginx/sites-enabled/site
+
+#test Nginx 
+sudo nginx -t
+
+#reload 
+sudo systemctl reload nginx
+
+
+
+sudo ln -s /etc/nginx/sites-available/sitename /etc/nginx/sites-enabled/
+#in the config prevent execution from storage folder 
+location ~* /storage/.*\.(php|pl|py|sh)$ {
+    deny all;
+}
+#to deal with 504 gateway timeout if using fpm
+#Edit /etc/php/8.2/fpm/pool.d/www.conf:
+pm = dynamic
+pm.max_children = 20    # adjust depending on RAM
+pm.start_servers = 5
+pm.min_spare_servers = 5
+pm.max_spare_servers = 10
+sudo systemctl restart php8.2-fpm
+
+#also Edit your site config (e.g., /etc/nginx/sites-available/your-site) and add/increase:
+location ~ \.php$ {
+    fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+    fastcgi_read_timeout 120s;   # default is 60s
+    include fastcgi_params;
+}
+#monitor live php fpm 
+sudo watch -n 2 "ps -o pid,cmd,rss -C php-fpm8.2"
+
+
+```
+
+## more 
+
+Great — let’s add Fail2Ban protection to automatically ban IPs that try to execute PHP files inside /storage or probe for webshells.
+
+This will block repeated malicious requests like:
+
+/storage/bootstrap.cache.php
+/storage/shell.php
+/.env
+🛡️ Step 1 — Create Fail2Ban Filter for Nginx Attacks
+sudo nano /etc/fail2ban/filter.d/nginx-webshell.conf
+
+Paste:
+
+[Definition]
+failregex = ^<HOST> -.*"(GET|POST).*\.php.*" 403
+            ^<HOST> -.*"(GET|POST).*/storage/.*" 404
+            ^<HOST> -.*"(GET|POST).*\.env" 403
+            ^<HOST> -.*"(GET|POST).*wp-content\.php" 403
+ignoreregex =
+
+This catches:
+
+attempts to run /storage/*.php
+
+probing .env
+
+common injected filenames like wp-content.php
+
+🛡️ Step 2 — Create Jail Configuration
+sudo nano /etc/fail2ban/jail.d/nginx-webshell.local
+
+Paste:
+
+[nginx-webshell]
+enabled = true
+filter = nginx-webshell
+port = http,https
+logpath = /var/log/nginx/web_access.log
+maxretry = 3
+findtime = 600
+bantime = 3600
+Meaning:
+
+3 malicious requests → banned
+
+ban lasts 1 hour
+
+watches only your site logs
+
+🔄 Step 3 — Restart Fail2Ban
+sudo systemctl restart fail2ban
+sudo fail2ban-client status nginx-webshell
+
+You should see:
+
+Status for the jail: nginx-webshell
+🔎 Step 4 — Test It (Safe Simulation)
+
+Run:
+
+curl -I http://weburl/storage/test.php
+curl -I http://weburl.env
+
+After 3 tries, your IP should be banned:
+
+sudo fail2ban-client status nginx-webshell
+🚨 Optional (Stronger Ban — Recommended)
+
+Ban immediately if any PHP is requested inside /storage:
+
+Edit filter:
+
+sudo nano /etc/fail2ban/filter.d/nginx-webshell.conf
+
+Replace with:
+
+[Definition]
+failregex = ^<HOST> -.*"(GET|POST).*/storage/.*\.php.*"
+ignoreregex =
+
+Now 1 request = instant ban.
+
 1. **Prerequisites**
 
 

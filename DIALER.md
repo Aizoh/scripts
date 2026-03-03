@@ -1,3 +1,9 @@
+
+## Guide 
+[leads reset](https://www.youtube.com/watch?v=9kMGa6eOynk)
+[video link](https://youtu.be/IKNSSU2mJ3M?si=-nOY4DILAj45FZ0x)
+[text link](https://www.striker24x7.com/2016/07/how-to-configure-dinstar-gsm-gateway.html)
+
 ## MYSQL ANYHOST Access
 
 ```bash
