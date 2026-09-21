@@ -71,3 +71,5 @@ make the directory refferenced executable by apache
 chmod 755 /var/spool/asterisk
 
 ```
+### recordings management ###
+[see](https://vicistack.com/blog/vicidial-call-recording/)
